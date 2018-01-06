@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-var queryPath = "https://api.giphy.com/v1/gifs/random?"
+var queryPath = "https://api.giphy.com/v1/gifs/search?"
 var apiKey = "api_key=pG74Ez5xu2bshU6HguRdNRcvi8FZUh1E"
 var topics = ["Taylor Swift", "Bill Murray",]
 
@@ -19,8 +19,8 @@ function renderButtons() {
 renderButtons();
 
 $("button").on("click", function (){
-    var searchTopic = $(this).attr("data");
-
+    var searchTopic = "&q=" + $(this).attr("data").replace(/\s+/, "");
+    console.log(searchTopic);
     $.ajax({
         url: queryPath + apiKey + searchTopic,
         method: "GET",
@@ -28,7 +28,20 @@ $("button").on("click", function (){
 
     .done(function(response) {
         console.log(response);
-    });
+        console.log(response.data.length);
+
+        for (var i = 0; i < response.data.length; i++)   {     
+        var smallGIF = response.data[[i]].images.original.url;
+        console.log(smallGIF);
+        $(".main-container").append("<img class=results>");        
+        $(".results").attr("src", smallGIF);
+        }
+
+// <!-- These are hopefully created dynamically in app.js
+//     <div class="results"></div>
+// <div class="gif"></div>
+// <div class="rating"></div> -->
+    }); //.done closer
 }); //on.click closer
 
 
