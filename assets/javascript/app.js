@@ -2,15 +2,15 @@ $(document).ready(function() {
 
 var queryPath = "https://api.giphy.com/v1/gifs/search?";
 var apiKey = "api_key=pG74Ez5xu2bshU6HguRdNRcvi8FZUh1E";
-var topics = ["Taylor Swift", "Bill Murray", "Aaron Rodgers", "Jennifer Aniston", "Brad Pitt"];
+var topics = ["Taylor Swift", "Bill Murray", "Will Ferrell", "Tina Fey", "Nicholas Cage"];
 var limitReq = "&limit=10";
-var rating = "&rating=g"
+var rating = "&rating=g";
 
 function renderButtons() {
     for (var i = 0  ; i < topics.length; i++) {
         var topicButton = $("<button>");        
         topicButton.addClass("button");
-        topicButton.attr("data", topics[i]);
+        topicButton.attr("data", topics[i]);    
         topicButton.text(topics[i]);
         $(".buttons").append(topicButton);
     };
@@ -18,7 +18,15 @@ function renderButtons() {
 
 renderButtons();
 
-$("button").on("click", function (){
+$(".submit").on("click", function(event) {
+    $(".buttons").empty();
+    var topic = $("#topic").val().trim();
+    topics.push(topic);
+    renderButtons();
+    console.log(topics);
+}); //submit on.click closer
+
+$(document).on("click", ".button", function (){
     $(".main-container").empty();
     var searchTopic = "&q=" + $(this).attr("data").replace(/\s/, "+");
     console.log(searchTopic);
@@ -30,7 +38,8 @@ $("button").on("click", function (){
     .done(function(response) {
         console.log(response);
         console.log(response.data.length);
-        for (var i = 0; i < response.data.length; i++)   {     
+
+        for (var i = 0; i < response.data.length; i++)   {
         var smallGIF = response.data[i].images.original.url;
         var staticGIF = response.data[i].images.original_still.url;
         console.log(smallGIF);
@@ -54,7 +63,7 @@ $("button").on("click", function (){
             $(this).attr("data", data.replace(data, src));
             $(this).attr("src", src.replace(src, data));
 
-        }); //img on.click closer       
+        }); //img on.click closer               
     }); //.done closer
 }); //button on.click closer
 

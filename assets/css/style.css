@@ -1,4 +1,8 @@
-button, .sub-container, img {
+header {
+    text-align: center;
+}
+
+button, .button, .sub-container, img {
     background-color: #eeba30;
     border-color: #d3a625;
     border-style: solid;
@@ -6,7 +10,7 @@ button, .sub-container, img {
     border-radius: 20px 50px;  
 }
 
-button {
+button, .button {
     font-family: 'Bellefair', serif;
     font-weight: 500;
     font-size: 100%;
